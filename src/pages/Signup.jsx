@@ -15,7 +15,7 @@ function Signup() {
   const onSubmit = async (data) => {
     await dispatch(signupAsync(data)).unwrap();
 
-    navigate("/login")
+    navigate("/")
   };
 
   return (
