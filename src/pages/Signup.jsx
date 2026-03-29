@@ -36,7 +36,23 @@ function Signup() {
               type="text"
               placeholder="Username"
               className="w-full px-6 py-4 rounded-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors"
-              {...register("username", { required: "Username is required" })}
+              {...register("username", { 
+                required: "Username is required",
+                minLength : {
+                  value : 3,
+                  message : "Minimum 3 Characters"
+                },
+                maxLength : {
+                  value : 35,
+                  message : "Maximimum 25 Characters"
+                },
+                validate : (value) => {
+                  if (value.trim()===""){
+                    return "Name Cannot be empty"
+                  }
+                  return true
+                } 
+              })}
             />
             {errors.username && (
               <span className="text-red-500 text-xs ml-4 mt-2 block">{errors.username.message}</span>
@@ -109,7 +125,7 @@ function Signup() {
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
             Already have an account?{' '}
-            <Link to="/" className="text-black font-medium hover:underline transition-colors">
+            <Link to="/login" className="text-black font-medium hover:underline transition-colors">
               Log in
             </Link>
           </p>

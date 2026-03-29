@@ -33,10 +33,16 @@ export default function Login() {
                     {/* Email Input */}
                     <div>
                         <input
-                            type="email"
+                            type='email'
                             placeholder="Email"
                             className="w-full px-6 py-4 rounded-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors"
-                            {...register("email", { required: "Email is required" })}
+                            {...register("email", { 
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Invalid email address"
+                                }
+                            })}
                         />
                         {errors.email && (
                             <span className="text-red-500 text-xs ml-4 mt-2 block">
@@ -51,7 +57,8 @@ export default function Login() {
                             type="password"
                             placeholder="Password"
                             className="w-full px-6 py-4 rounded-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors"
-                            {...register("password", { required: "Password is required" })}
+                            {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" }
+ })}
                         />
                         {errors.password && (
                             <span className="text-red-500 text-xs ml-4 mt-2 block">
