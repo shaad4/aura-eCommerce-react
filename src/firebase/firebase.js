@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDT_uoTnlBdWDbD2VzSjnMDokyVXjQYOIA",
-  authDomain: "olx-clone-8fa50.firebaseapp.com",
-  projectId: "olx-clone-8fa50",
-  storageBucket: "olx-clone-8fa50.firebasestorage.app",
-  messagingSenderId: "752005683805",
-  appId: "1:752005683805:web:fcebbdba9012a54d1ccbb4"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 // Initialize Firebase
