@@ -52,7 +52,19 @@ export default function Sell(){
                             type="text"
                             placeholder="Product Title"
                             className="w-full px-6 py-4 rounded-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors"
-                            {...register("title", { required: "A title is required" })}
+                            {...register("title", {
+                                required: "A title is required",
+                                minLength : {
+                                    value : 3,
+                                    message : "Minimum 3 Characters"
+                                },
+                                maxLength : {
+                                    value : 30,
+                                    message : "Maximum 30 characters",
+                                },
+                                validate : (value) => value.trim() !== "" || "Cannot be empty spaces"
+                                
+                            })}
                         />
                         {errors.title && (
                             <span className="text-red-500 text-xs ml-4 mt-2 block">{errors.title.message}</span>
@@ -70,7 +82,8 @@ export default function Sell(){
                                 className="w-full pl-10 pr-6 py-4 rounded-full border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors"
                                 {...register("price", { 
                                     required: "Price is required", 
-                                    min: { value: 1, message: "Price must be at least ₹1" } 
+                                    min: { value: 1, message: "Price must be at least ₹1" },
+                                    max: { value: 1000000, message : "Price must be below ₹100000" }
                                 })}
                             />
                         </div>
@@ -84,7 +97,23 @@ export default function Sell(){
                         <textarea
                             placeholder="Describe your product..."
                             className="w-full px-6 py-4 rounded-3xl border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors resize-none h-32"
-                            {...register("description", { required: "Please provide a description" })}
+                            {...register("description", {
+                                required: "Please provide a description",
+                                maxLength : {
+                                    value : 300,
+                                    message : "Maximimum 300 characters"
+                                },
+                                minLength : {
+                                    value : 5,
+                                    message : "Minimum 5 Characters"
+                                },
+                                validate : (value) =>{
+                                    if(value.trim()===""){
+                                        return "Cannot be empty space"
+                                    }
+                                    return true;
+                                }
+                             })}
                         />
                         {errors.description && (
                             <span className="text-red-500 text-xs ml-4 mt-2 block">{errors.description.message}</span>
