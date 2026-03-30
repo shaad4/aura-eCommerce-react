@@ -16,6 +16,7 @@ import { auth } from "./firebase/firebase";
 import { setUser } from "./features/authSlice";
 import { useDispatch } from 'react-redux'
 import MyOrders from './pages/MyOrders'
+import PageNotFound from './pages/PageNotFound'
 
 
 export default function App() {
@@ -89,6 +90,7 @@ export default function App() {
             <MyOrders />
           </ProtectedRoutes>
         }/>
+        <Route path='*' element={<PageNotFound />}/>
       </Routes>
     </>
   )
