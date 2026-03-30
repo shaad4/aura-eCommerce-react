@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteProductAsync } from '../features/productsSlice';
+import { deleteProductAsync, fetchProductsAsync } from '../features/productsSlice';
 
 export default function MyListings() {
     const dispatch = useDispatch();
@@ -9,6 +9,10 @@ export default function MyListings() {
     const { products, loading } = useSelector(state => state.products);
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        dispatch(fetchProductsAsync());
+    }, [dispatch])
 
     if(loading){
         return (
