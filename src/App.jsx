@@ -17,6 +17,7 @@ import { setUser } from "./features/authSlice";
 import { useDispatch } from 'react-redux'
 import MyOrders from './pages/MyOrders'
 import PageNotFound from './pages/PageNotFound'
+import { RouteErrorBoundary } from './components/error/RouteErrorBoundary'
 
 
 export default function App() {
@@ -39,58 +40,85 @@ export default function App() {
   }, [dispatch]);
   return (
     <>
-      <Navbar />
+      <RouteErrorBoundary>
+        <Navbar />
+      </RouteErrorBoundary>
+      
 
       <Routes>
-        <Route path='/' element={<Home />}/>
+        <Route path='/' element={
+          <RouteErrorBoundary>
+            <Home />
+          </RouteErrorBoundary>
+         
+        }/>
         <Route path='/login' element={<Login />}/>
         <Route path='/signup' element={<Signup />}/>
         <Route path='/products' element={
-          <ProtectedRoutes>
-            <Products />
-          </ProtectedRoutes>
-          
+          <RouteErrorBoundary>
+            <ProtectedRoutes>
+              <Products />
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
+        
           }/> 
         <Route path='/sell' element={
-          <ProtectedRoutes>
-            <Sell />
-          </ProtectedRoutes>
+          <RouteErrorBoundary>
+            <ProtectedRoutes>
+              <Sell />
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
+         
+          
+        }/>
+        
+        <Route path='/cart' element={
+          <RouteErrorBoundary>
+            <ProtectedRoutes>
+              <Cart/>
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
           
           }/>
-        <Route path='/products' element={
-          <ProtectedRoutes>
-            <sell />
-          </ProtectedRoutes>
-         
-          }/>
-        <Route path='/cart' element={
-          <ProtectedRoutes>
-            <Cart/>
-          </ProtectedRoutes>
-         
-          }/>
         <Route path='/checkout' element={
-          <ProtectedRoutes>
-            <Checkout />
-          </ProtectedRoutes>
+          <RouteErrorBoundary>
+             <ProtectedRoutes>
+              <Checkout />
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
+         
           
           }/>
         <Route path='/my-listing' element={
-          <ProtectedRoutes>
-            <MyListings />
-          </ProtectedRoutes>
+          <RouteErrorBoundary>
+            <ProtectedRoutes>
+              <MyListings />
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
+          
         }/>
         <Route path="/edit/:id" element={
-          <ProtectedRoutes>
-            <EditProduct />
-          </ProtectedRoutes>
+          <RouteErrorBoundary>
+            <ProtectedRoutes>
+              <EditProduct />
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
+          
         }/>
         <Route path='/orders' element={
-          <ProtectedRoutes>
-            <MyOrders />
-          </ProtectedRoutes>
+          <RouteErrorBoundary>
+            <ProtectedRoutes>
+              <MyOrders />
+            </ProtectedRoutes>
+          </RouteErrorBoundary>
+          
         }/>
-        <Route path='*' element={<PageNotFound />}/>
+        <Route path='*' element={
+          <RouteErrorBoundary>
+            <PageNotFound />
+          </RouteErrorBoundary>
+          
+        }/>
       </Routes>
     </>
   )

@@ -9,7 +9,7 @@ export default function MyListings() {
     const { products, loading } = useSelector(state => state.products);
 
     const navigate = useNavigate();
-
+    
     useEffect(()=>{
         dispatch(fetchProductsAsync());
     }, [dispatch])

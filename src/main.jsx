@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { store } from './app/store.js';
 import "react-toastify/dist/ReactToastify.css";
+import { RouteErrorBoundary } from './components/error/RouteErrorBoundary.jsx';
 
 
 
@@ -15,7 +16,10 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
       
     <StrictMode>
-      <App />
+      <RouteErrorBoundary global={true}>
+         <App />
+      </RouteErrorBoundary>
+     
     </StrictMode>
     
     <ToastContainer />
