@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginUser, logoutUser, signupUser } from "../firebase/authService";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify'
-import { useNavigate } from "react-router-dom";
 
 export const loginAsync = createAsyncThunk(
     "auth/login",
@@ -32,7 +31,7 @@ const authSlice = createSlice({
     initialState : {
         user : null,
         isLoggedIn : false,
-        loading : false
+        loading : true
     },
     reducers: {
         logout : (state) => {
