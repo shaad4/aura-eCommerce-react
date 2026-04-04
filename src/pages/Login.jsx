@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { loginAsync } from '../features/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { fetchCart } from '../features/cartSlice';
 
 export default function Login() {
     const { register, handleSubmit , formState : {errors}} = useForm();
@@ -11,9 +12,12 @@ export default function Login() {
     
     const { loading } = useSelector((state) => state.auth);
 
+
     const onSubmit = async (data) => {
 
-        await dispatch(loginAsync(data)).unwrap();
+        const loggedInUser = await dispatch(loginAsync(data)).unwrap();
+
+        await dispatch(fetchCart(loggedInUser.id))
 
         navigate("/products")
     };

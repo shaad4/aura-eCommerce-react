@@ -1,14 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCart, removeFromCart } from '../features/cartSlice';
+import { clearCart, removeFromCart, syncCart } from '../features/cartSlice';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
-    const {items} = useSelector((state) => state.cart);
+    const {items, isCartLoaded } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
+    const user  = useSelector((state) => state.auth.user);
+
     const cartTotal = items.reduce((total, item) => total + Number(item.price), 0);
+
+    useEffect(() => {
+        if(!user || !isCartLoaded) return;
+
+        if (items.length === 0 ) return;
+
+        console.log("SYNCING:", items); 
+
+        const timeout = setTimeout(() => {
+            dispatch(syncCart({ userId : user.id, cartItems : items }));
+        }, 500);
+
+        return () => clearTimeout(timeout);
+    }, [items]);
 
     const handleRemove = (id) => {
         dispatch(removeFromCart(id));

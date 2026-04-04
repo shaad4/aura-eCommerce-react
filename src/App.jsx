@@ -14,14 +14,17 @@ import EditProduct from './pages/EditProduct'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
 import { setUser } from "./features/authSlice";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import MyOrders from './pages/MyOrders'
 import PageNotFound from './pages/PageNotFound'
 import { RouteErrorBoundary } from './components/error/RouteErrorBoundary'
+import { syncCart } from './features/cartSlice'
 
 
 export default function App() {
   const dispatch = useDispatch();
+  const { items, isCartLoaded } = useSelector(state => state.cart);
+  const { user } = useSelector(state => state.auth);
   
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -38,6 +41,20 @@ export default function App() {
 
     return () => unsubscribe();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!user || !isCartLoaded) return;
+    if (items.length === 0) return;
+
+    console.log("GLOBAL SYNC:", items);
+
+    const timeout = setTimeout(() => {
+      dispatch(syncCart({ userId: user.id, cartItems: items }));
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [items, isCartLoaded, user, dispatch]);
+
   return (
     <>
       <RouteErrorBoundary>

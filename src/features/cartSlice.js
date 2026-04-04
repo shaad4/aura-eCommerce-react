@@ -1,9 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getCart, saveCart } from "../firebase/cartService";
+
+export const fetchCart = createAsyncThunk(
+    "cart/fetchCart",
+    async (userId) => {
+        return await getCart(userId);
+    }
+);
+
+export const syncCart = createAsyncThunk(
+    "cart/syncCart",
+    async ({ userId, cartItems }) => {
+        await saveCart(userId, cartItems);
+        return cartItems;
+    }
+);
+
+
 
 const cartSlice = createSlice({
     name : "cart",
     initialState : {
-        items : []
+        items : [],
+        isCartLoaded : false
     },
 
     reducers : {
@@ -26,6 +45,16 @@ const cartSlice = createSlice({
         clearCart : (state) => {
             state.items = [];
         }
+    },
+    extraReducers : (builder) => {
+        builder
+            .addCase(fetchCart.fulfilled, (state, action) => {
+                state.items = action.payload;
+                state.isCartLoaded = true;
+            })
+            .addCase(syncCart.fulfilled, (state, action) => {
+                state.items = action.payload;
+            });
     }
 })
 
